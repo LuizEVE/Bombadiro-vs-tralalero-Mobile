@@ -270,51 +270,6 @@
                 height: 70vh;
             }
         }
-        .joystick-container {
-            position: absolute;
-            bottom: 30px;
-            left: 50px;
-            width: 120px;
-            height: 120px;
-            z-index: 20;
-            touch-action: none;
-        }
-
-        .joystick-base {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .joystick-thumb {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            touch-action: none;
-        }
-
-        @media (max-width: 500px) {
-            .joystick-container {
-                width: 100px;
-                height: 100px;
-                bottom: 20px;
-                left: 30px;
-            }
-            
-            .joystick-thumb {
-                width: 40px;
-                height: 40px;
-            }
-        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
@@ -340,9 +295,11 @@
     </div>
 
     <div class="controls">
-        <div class="joystick-container" id="joystickContainer">
-            <div class="joystick-base"></div>
-            <div class="joystick-thumb" id="joystickThumb"></div>
+        <div class="d-pad">
+            <div class="control-btn up" id="upBtn">↑</div>
+            <div class="control-btn left" id="leftBtn">←</div>
+            <div class="control-btn right" id="rightBtn">→</div>
+            <div class="control-btn down" id="downBtn">↓</div>
         </div>
     </div>
 
@@ -362,7 +319,6 @@
         const optionsContainer = document.getElementById('optionsContainer');
         
        
-
         // Configurações do jogo
         const containerWidth = gameContainer.offsetWidth;
         const containerHeight = gameContainer.offsetHeight;
@@ -408,115 +364,7 @@
 
         // Controles Touch
         function setupTouchControls() {
-            // Botões direcionais
-            let joystickActive = false;
-        let joystickCenter = { x: 0, y: 0 };
-        let joystickRadius = 60;
-        let joystickDirection = { x: 0, y: 0 };
-
-        // Configuração do Joystick
-        function setupJoystick() {
-            const joystickContainer = document.getElementById('joystickContainer');
-            const joystickThumb = document.getElementById('joystickThumb');
             
-            // Posiciona o joystick corretamente
-            const rect = joystickContainer.getBoundingClientRect();
-            joystickCenter = {
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2
-            };
-            joystickRadius = rect.width / 2;
-
-            // Eventos de toque
-            joystickThumb.addEventListener('touchstart', handleJoystickStart);
-            document.addEventListener('touchmove', handleJoystickMove);
-            document.addEventListener('touchend', handleJoystickEnd);
-            
-            // Para testes em desktop
-            joystickThumb.addEventListener('mousedown', handleJoystickStart);
-            document.addEventListener('mousemove', handleJoystickMove);
-            document.addEventListener('mouseup', handleJoystickEnd);
-        }
-
-        function handleJoystickStart(e) {
-            joystickActive = true;
-            e.preventDefault();
-        }
-
-        function handleJoystickMove(e) {
-            if (!joystickActive) return;
-            
-            e.preventDefault();
-            const joystickThumb = document.getElementById('joystickThumb');
-            
-            // Obtém a posição do toque/clique
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            // Calcula a direção
-            const deltaX = clientX - joystickCenter.x;
-            const deltaY = clientY - joystickCenter.y;
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            
-            // Limita ao raio do joystick
-            let angle = Math.atan2(deltaY, deltaX);
-            let limitedDistance = Math.min(distance, joystickRadius);
-            
-            // Posição do thumb
-            const thumbX = limitedDistance * Math.cos(angle);
-            const thumbY = limitedDistance * Math.sin(angle);
-            
-            joystickThumb.style.transform = `translate(calc(-50% + ${thumbX}px), calc(-50% + ${thumbY}px))`;
-            
-            // Calcula a direção normalizada (-1 a 1)
-            joystickDirection = {
-                x: thumbX / joystickRadius,
-                y: thumbY / joystickRadius
-            };
-        }
-
-        function handleJoystickEnd() {
-            joystickActive = false;
-            joystickDirection = { x: 0, y: 0 };
-            const joystickThumb = document.getElementById('joystickThumb');
-            joystickThumb.style.transform = 'translate(-50%, -50%)';
-        }
-
-        // Modifique a função updateTralalero para usar o joystick
-        function updateTralalero() {
-            if (gamePaused) return;
-            
-            // Usa o joystick ou teclado
-            const moveX = joystickActive ? joystickDirection.x : 
-                         (keys.ArrowRight ? 1 : 0) - (keys.ArrowLeft ? 1 : 0);
-            const moveY = joystickActive ? joystickDirection.y : 
-                         (keys.ArrowDown ? 1 : 0) - (keys.ArrowUp ? 1 : 0);
-            
-            // Aplica o movimento
-            tralaleroPos.x += moveX * tralaleroSpeed;
-            tralaleroPos.y += moveY * tralaleroSpeed;
-            
-            // Limita aos limites do container
-            tralaleroPos.x = Math.max(0, Math.min(containerWidth - 40, tralaleroPos.x));
-            tralaleroPos.y = Math.max(0, Math.min(containerHeight - 40, tralaleroPos.y));
-
-            tralalero.style.left = tralaleroPos.x + 'px';
-            tralalero.style.top = tralaleroPos.y + 'px';
-
-            // Verificar se chegou ao oceano
-            if (tralaleroPos.y <= 30) {
-                pontos += 10;
-                updateScore();
-                showQuestion();
-            }
-        }
-
-        // (Mantenha todas as outras funções anteriores)
-
-        // No final, adicione o setup do joystick à inicialização
-        setupJoystick();
-        resetGame();
-        gameLoop();
             
             // Arrastar o Tralalero
             let isDragging = false;
@@ -775,10 +623,7 @@
         function updateTralalero() {
             if (gamePaused) return;
             
-            if (keys.ArrowUp) tralaleroPos.y = Math.max(0, tralaleroPos.y - tralaleroSpeed);
-            if (keys.ArrowDown) tralaleroPos.y = Math.min(containerHeight - 40, tralaleroPos.y + tralaleroSpeed);
-            if (keys.ArrowLeft) tralaleroPos.x = Math.max(0, tralaleroPos.x - tralaleroSpeed);
-            if (keys.ArrowRight) tralaleroPos.x = Math.min(containerWidth - 40, tralaleroPos.x + tralaleroSpeed);
+       
 
             tralalero.style.left = tralaleroPos.x + 'px';
             tralalero.style.top = tralaleroPos.y + 'px';
