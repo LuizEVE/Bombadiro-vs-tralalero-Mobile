@@ -8,21 +8,26 @@
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            box-sizing: border-box;                 
             touch-action: manipulation;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Press Start 2P', cursive, Arial, sans-serif;
-            
+            background-color: #000;
+            color: white;
             position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            color: white;
-            overflow: hidden;
-            
         }
 
         .game-container {
@@ -64,6 +69,9 @@
             transition: all 0.1s ease;
             touch-action: none;
             user-select: none;
+            left: 0;
+            top: 0;
+            transform: translate(0, 0);
         }
 
         .crocodilo {
@@ -278,8 +286,8 @@
 
         // Jogador (Tralalero)
         let tralaleroPos = {
-            x: containerWidth / 2 - 20,
-            y: containerHeight - 80
+            x: 0,
+            y: 0
         };
         const tralaleroSpeed = 5;
         let tempoNaParteDeBaixo = 0;
@@ -287,8 +295,8 @@
 
         // Crocodilo (Inimigo)
         let crocodiloPos = {
-            x: containerWidth / 2 - 30,
-            y: 50
+            x: 0,
+            y: 0
         };
         let crocodiloSpeed = 5;
         let crocodiloOriginalY = 50;
@@ -297,7 +305,7 @@
 
         // Bombas
         let bombs = [];
-        let bombSpeed = 8;
+        let bombSpeed = 3;
         let bombInterval = 60;
         let bombCounter = 0;
 
@@ -312,16 +320,18 @@
             containerWidth = gameContainer.offsetWidth;
             containerHeight = gameContainer.offsetHeight;
             
+            // Posição inicial do Tralalero (centralizado na parte inferior)
             tralaleroPos = {
-                x: containerWidth / 2 - 20,
-                y: containerHeight - 200
+                x: containerWidth / 2 - 20,  // 20 é metade da largura do Tralalero (40px/2)
+                y: containerHeight - 80      // 80px do fundo para não sair da tela
             };
             tralalero.style.left = tralaleroPos.x + 'px';
             tralalero.style.top = tralaleroPos.y + 'px';
             
+            // Posição inicial do Crocodilo (centralizado no topo)
             crocodiloPos = {
-                x: containerWidth / 2 - 30,
-                y: 50
+                x: containerWidth / 2 - 35,  // 35 é metade da largura do Crocodilo (70px/2)
+                y: 50                        // 50px do topo
             };
             crocodilo.style.left = crocodiloPos.x + 'px';
             crocodilo.style.top = crocodiloPos.y + 'px';
@@ -351,9 +361,9 @@
                 let newX = touch.clientX - offsetX - containerRect.left;
                 let newY = touch.clientY - offsetY - containerRect.top;
                 
-                // Limita aos limites do container
-                newX = Math.max(0, Math.min(containerWidth - 40, newX));
-                newY = Math.max(0, Math.min(containerHeight - 40, newY));
+                // Limita aos limites do container (considerando o tamanho do Tralalero)
+                newX = Math.max(0, Math.min(containerWidth - tralalero.offsetWidth, newX));
+                newY = Math.max(0, Math.min(containerHeight - tralalero.offsetHeight, newY));
                 
                 // Atualiza a posição
                 tralaleroPos.x = newX;
@@ -485,7 +495,7 @@
             tralalero.style.top = tralaleroPos.y + 'px';
             
             crocodiloPos = {
-                x: containerWidth / 2 - 30,
+                x: containerWidth / 2 - 35,
                 y: 50
             };
             crocodilo.style.left = crocodiloPos.x + 'px';
@@ -522,7 +532,7 @@
                 
                 if (crocodiloEstaDescendo) {
                     crocodiloPos = {
-                        x: containerWidth / 2 - 30,
+                        x: containerWidth / 2 - 35,
                         y: 50
                     };
                     crocodilo.style.left = crocodiloPos.x + 'px';
@@ -547,7 +557,7 @@
                 crocodiloPos.x -= velocidadeAtual;
             }
             
-            crocodiloPos.x = Math.max(0, Math.min(containerWidth - 60, crocodiloPos.x));
+            crocodiloPos.x = Math.max(0, Math.min(containerWidth - 70, crocodiloPos.x));
             
             crocodilo.style.left = crocodiloPos.x + 'px';
             crocodilo.style.top = crocodiloPos.y + 'px';
