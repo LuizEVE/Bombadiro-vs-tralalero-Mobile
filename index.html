@@ -2,9 +2,13 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Tralalero vs Bombardeiro Crocodilo - Mobile</title>
     <style>
+        :root {
+            --sat: env(safe-area-inset-bottom, 0px);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -28,6 +32,7 @@
             height: 100%;
             top: 0;
             left: 0;
+            padding-bottom: var(--sat);
         }
 
         .game-container {
@@ -35,7 +40,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100vh;
+            height: calc(100vh - var(--sat));
             background-image: url('Imagem41.jpg');
             background-size: cover;
             background-position: center;
@@ -216,7 +221,7 @@
 
         .warning {
             position: absolute;
-            bottom: 20px;
+            bottom: calc(20px + var(--sat));
             left: 50%;
             transform: translateX(-50%);
             color: red;
@@ -281,8 +286,8 @@
         const optionsContainer = document.getElementById('optionsContainer');
         
         // Configurações do jogo
-        let containerWidth = gameContainer.offsetWidth;
-        let containerHeight = gameContainer.offsetHeight;
+        let containerWidth = window.innerWidth;
+        let containerHeight = window.innerHeight;
 
         // Jogador (Tralalero)
         let tralaleroPos = {
@@ -317,21 +322,27 @@
 
         // Inicializar posições
         function initPositions() {
-            containerWidth = gameContainer.offsetWidth;
-            containerHeight = gameContainer.offsetHeight;
+            containerWidth = window.innerWidth;
+            containerHeight = window.innerHeight;
             
             // Posição inicial do Tralalero (centralizado na parte inferior)
+            const tralaleroBottomMargin = 100; // Margem maior para garantir visibilidade
             tralaleroPos = {
-                x: containerWidth / 2 - 20,  // 20 é metade da largura do Tralalero (40px/2)
-                y: containerHeight - 80    // 80px do fundo para não sair da tela
+                x: containerWidth / 2 - 20,
+                y: containerHeight - tralaleroBottomMargin
             };
+            
+            // Ajuste para dispositivos com barra de navegação virtual
+            const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat')) || 0;
+            tralaleroPos.y = Math.min(tralaleroPos.y, containerHeight - tralalero.offsetHeight - safeAreaBottom);
+            
             tralalero.style.left = tralaleroPos.x + 'px';
             tralalero.style.top = tralaleroPos.y + 'px';
             
-            // Posição inicial do Crocodilo (centralizado no topo)
+            // Posição do Crocodilo
             crocodiloPos = {
-                x: containerWidth / 2 - 35,  // 35 é metade da largura do Crocodilo (70px/2)
-                y: 50                        // 50px do topo
+                x: containerWidth / 2 - 35,
+                y: 50
             };
             crocodilo.style.left = crocodiloPos.x + 'px';
             crocodilo.style.top = crocodiloPos.y + 'px';
@@ -487,10 +498,17 @@
         }
 
         function resetPositions() {
+            containerWidth = window.innerWidth;
+            containerHeight = window.innerHeight;
+            
+            const tralaleroBottomMargin = 100;
+            const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat')) || 0;
+            
             tralaleroPos = {
                 x: containerWidth / 2 - 20,
-                y: containerHeight - 80
+                y: Math.min(containerHeight - tralaleroBottomMargin, containerHeight - tralalero.offsetHeight - safeAreaBottom)
             };
+            
             tralalero.style.left = tralaleroPos.x + 'px';
             tralalero.style.top = tralaleroPos.y + 'px';
             
@@ -500,14 +518,13 @@
             };
             crocodilo.style.left = crocodiloPos.x + 'px';
             crocodilo.style.top = crocodiloPos.y + 'px';
+            
             crocodiloEstaDescendo = false;
             warningElement.style.opacity = '0';
             tempoNaParteDeBaixo = 0;
             
             bombs.forEach(bomb => {
-                if (bomb.parentNode) {
-                    bomb.remove();
-                }
+                if (bomb.parentNode) bomb.remove();
             });
             bombs = [];
         }
@@ -681,8 +698,8 @@
 
         // Redimensionar o jogo quando a janela mudar de tamanho
         window.addEventListener('resize', function() {
-            containerWidth = gameContainer.offsetWidth;
-            containerHeight = gameContainer.offsetHeight;
+            containerWidth = window.innerWidth;
+            containerHeight = window.innerHeight;
             if (!gamePaused && !gameOver) {
                 resetPositions();
             }
