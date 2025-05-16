@@ -35,6 +35,131 @@
             padding-bottom: var(--sat);
         }
 
+/* Tela de início responsiva */
+#startScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    text-align: center;
+    padding: 5vw; /* Usando viewport units para padding */
+    box-sizing: border-box;
+}
+
+.game-logo {
+    font-size: clamp(1.8rem, 8vw, 2.5rem); /* Tamanho responsivo */
+    margin-bottom: clamp(15px, 4vw, 30px); /* Margem responsiva */
+    color: #4CAF50;
+    text-shadow: 0 0 10px #4CAF50;
+    animation: pulse 1.5s infinite;
+    line-height: 1.3;
+    padding: 0 10px;
+}
+
+.game-subtitle, .gameobjetive {
+    font-size: clamp(0.8rem, 3.5vw, 1rem); /* Tamanho responsivo */
+    color: #40A4DF;
+    margin-bottom: clamp(10px, 3vw, 20px); /* Margem responsiva */
+    text-shadow: 0 0 5px #40A4DF;
+    line-height: 1.4;
+    max-width: 90%; /* Limita a largura do texto */
+}
+
+.gameobjetive {
+    margin-top: clamp(10px, 3vw, 20px);
+    margin-bottom: clamp(15px, 5vw, 40px);
+}
+
+.start-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 3vw, 20px); /* Espaçamento responsivo */
+    width: min(90%, 300px); /* Largura máxima de 300px mas 90% em telas pequenas */
+}
+
+.start-btn, .rate-btn {
+    padding: clamp(12px, 3vw, 15px); /* Padding responsivo */
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(0.8rem, 3vw, 0.9rem); /* Tamanho de fonte responsivo */
+    background-color: #333;
+    color: white;
+    border: 3px solid;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0;
+    width: 100%;
+}
+
+.start-btn {
+    border-color: #4CAF50;
+    box-shadow-color: #1E5E25;
+}
+
+.rate-btn {
+    border-color: #DF3232;
+    box-shadow-color: #7A1A1A;
+}
+
+.start-btn:hover, .rate-btn:hover {
+    transform: translateY(-3px);
+}
+
+.start-btn:active, .rate-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0;
+}
+
+/* Ajustes para telas pequenas (menos de 400px) */
+@media (max-width: 400px) {
+    .game-logo {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .game-subtitle, .gameobjetive {
+        font-size: 0.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .gameobjetive {
+        margin-bottom: 25px;
+    }
+}
+
+/* Ajustes para orientação paisagem */
+@media (orientation: landscape) {
+    .game-logo {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+        margin-bottom: clamp(10px, 2vw, 20px);
+    }
+    
+    .game-subtitle, .gameobjetive {
+        font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+        margin-bottom: clamp(8px, 2vw, 15px);
+    }
+    
+    .start-buttons {
+        flex-direction: row;
+        justify-content: center;
+        max-width: 450px;
+    }
+    
+    .start-btn, .rate-btn {
+        padding: clamp(10px, 2vw, 14px);
+        font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+        max-width: 200px;
+    }
+}
+
         .game-container {
             position: fixed;
             top: 0;
@@ -48,8 +173,10 @@
             border: 4px solid #333;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
             overflow: hidden;
+            display: none; /* Inicialmente oculto */
         }
 
+        /* Restante do seu CSS original permanece igual */
         .oceano {
             position: absolute;
             top: 0;
@@ -202,40 +329,53 @@
         }
 
         .restart-btn {
-            padding: 15px 30px;
-            background-color: #4CBB17;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            padding: 15px;
             font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            background-color: #333;
+            color: white;
+            border: 3px solid #4CAF50;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 14px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 5px 0 #1E5E25;
         }
 
         .aval-btn{
-            padding: 15px 30px;
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            padding: 15px;
             font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            background-color: #333;
+            color: white;
+            border: 3px solid #DF3232;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 14px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 5px 0 #7A1A1A;
             margin-top: 20px;
         }
 
         .restart-btn:hover {
-            background-color: #3CA312;
-            transform: scale(1.05);
+           background-color: #4CAF50;
+            transform: translateY(-3px);
+        }
+
+        .restart-btn:active{
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1E5E25;
+ 
         }
 
         .aval-btn:hover {
-            background-color: #bb1717;
-            transform: scale(1.05);
+            background-color: #DF3232;
+            transform: translateY(-3px);
+        }
+
+        .aval-btn:active{
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #7A1A1A;
 
         }
 
@@ -270,6 +410,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Nova tela de início -->
+    <div id="startScreen">
+        <div class="game-logo">TRALALERO TRALALA vs<br>BOMBARDEIRO CROCODILO</div>
+        <div class="game-objetive">Objetivo: Chegar ao oceano (BARRA AZUL NA PARTE SUPERIOR DA TELA)</div>
+        <div class="game-subtitle">Fuja das bombas e responda as perguntas!</div>
+        <div class="start-buttons">
+            <button class="start-btn" id="startBtn">COMEÇAR</button>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd3Zh92j5YiYmhwkAK4CHy6klVcm96AaIXwn7wRKzOCNrYHXg/viewform?usp=header" class="rate-btn">AVALIAR</a>
+        </div>
+    </div>
+
+    <!-- Container do jogo (inicialmente oculto) -->
     <div class="game-container">
         <div class="oceano"></div>
         <div class="score-panel">Pontos: <span id="score">0</span></div>
@@ -292,443 +444,463 @@
     </div>
 
     <script>
-        // Elementos do DOM
+        // Elementos da tela de início
+        const startScreen = document.getElementById('startScreen');
+        const startBtn = document.getElementById('startBtn');
+        const rateBtn = document.getElementById('rateBtn');
         const gameContainer = document.querySelector('.game-container');
-        const tralalero = document.getElementById('tralalero');
-        const crocodilo = document.getElementById('crocodilo');
-        const scoreElement = document.getElementById('score');
-        const levelElement = document.getElementById('level');
-        const gameOverScreen = document.getElementById('gameOver');
-        const restartBtn = document.getElementById('restartBtn');
-        const warningElement = document.getElementById('warning');
-        
-        const questionScreen = document.getElementById('questionScreen');
-        const questionText = document.getElementById('questionText');
-        const optionsContainer = document.getElementById('optionsContainer');
-        
-        // Configurações do jogo
-        let containerWidth = window.innerWidth;
-        let containerHeight = window.innerHeight;
 
-        // Jogador (Tralalero)
-        let tralaleroPos = {
-            x: 0,
-            y: 0
-        };
-        const tralaleroSpeed = 5;
-        let tempoNaParteDeBaixo = 0;
-        const tempoMaximoAteDescer = 180;
+        // Configurar botões da tela de início
+        startBtn.addEventListener('click', function() {
+            startScreen.style.display = 'none';
+            gameContainer.style.display = 'block';
+            initGame();
+        });
 
-        // Crocodilo (Inimigo)
-        let crocodiloPos = {
-            x: 0,
-            y: 0
-        };
-        let crocodiloSpeed = 5;
-        let crocodiloOriginalY = 50;
-        let crocodiloEstaDescendo = false;
-        let currentLevel = 1;
+        rateBtn.addEventListener('click', function() {
+            alert("Você será redirecionado para avaliar o jogo!");
+            // window.location.href = "URL_DA_AVALIACAO";
+        });
 
-        // Bombas
-        let bombs = [];
-        let bombSpeed = 3;
-        let bombInterval = 60;
-        let bombCounter = 0;
-
-        // Estado do jogo
-        let gameOver = false;
-        let gamePaused = false;
-        let pontos = 0;
-        let frames = 0;
-
-        // Inicializar posições
-        function initPositions() {
-            containerWidth = window.innerWidth;
-            containerHeight = window.innerHeight;
+        // Função para inicializar o jogo (seu código original)
+        function initGame() {
+            // Elementos do DOM
+            const tralalero = document.getElementById('tralalero');
+            const crocodilo = document.getElementById('crocodilo');
+            const scoreElement = document.getElementById('score');
+            const levelElement = document.getElementById('level');
+            const gameOverScreen = document.getElementById('gameOver');
+            const restartBtn = document.getElementById('restartBtn');
+            const warningElement = document.getElementById('warning');
             
-            // Posição inicial do Tralalero (centralizado na parte inferior)
-            const tralaleroBottomMargin = 100; // Margem maior para garantir visibilidade
-            tralaleroPos = {
-                x: containerWidth / 2 - 20,
-                y: containerHeight - tralaleroBottomMargin
+            const questionScreen = document.getElementById('questionScreen');
+            const questionText = document.getElementById('questionText');
+            const optionsContainer = document.getElementById('optionsContainer');
+            
+            // Configurações do jogo
+            let containerWidth = window.innerWidth;
+            let containerHeight = window.innerHeight;
+
+            // Jogador (Tralalero)
+            let tralaleroPos = {
+                x: 0,
+                y: 0
             };
-            
-            // Ajuste para dispositivos com barra de navegação virtual
-            const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat')) || 0;
-            tralaleroPos.y = Math.min(tralaleroPos.y, containerHeight - tralalero.offsetHeight - safeAreaBottom);
-            
-            tralalero.style.left = tralaleroPos.x + 'px';
-            tralalero.style.top = tralaleroPos.y + 'px';
-            
-            // Posição do Crocodilo
-            crocodiloPos = {
-                x: containerWidth / 2 - 35,
-                y: 50
+            const tralaleroSpeed = 5;
+            let tempoNaParteDeBaixo = 0;
+            const tempoMaximoAteDescer = 180;
+
+            // Crocodilo (Inimigo)
+            let crocodiloPos = {
+                x: 0,
+                y: 0
             };
-            crocodilo.style.left = crocodiloPos.x + 'px';
-            crocodilo.style.top = crocodiloPos.y + 'px';
-        }
+            let crocodiloSpeed = 5;
+            let crocodiloOriginalY = 50;
+            let crocodiloEstaDescendo = false;
+            let currentLevel = 1;
 
-        // Controles Touch
-        function setupTouchControls() {
-            // Arrastar o Tralalero
-            let isDragging = false;
-            let offsetX, offsetY;
-            
-            tralalero.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                isDragging = true;
-                const touch = e.touches[0];
-                const rect = tralalero.getBoundingClientRect();
-                offsetX = touch.clientX - rect.left;
-                offsetY = touch.clientY - rect.top;
-            });
-            
-            document.addEventListener('touchmove', (e) => {
-                if (!isDragging || gamePaused || gameOver) return;
-                e.preventDefault();
-                const touch = e.touches[0];
-                const containerRect = gameContainer.getBoundingClientRect();
+            // Bombas
+            let bombs = [];
+            let bombSpeed = 3;
+            let bombInterval = 60;
+            let bombCounter = 0;
+
+            // Estado do jogo
+            let gameOver = false;
+            let gamePaused = false;
+            let pontos = 0;
+            let frames = 0;
+
+            // Inicializar posições
+            function initPositions() {
+                containerWidth = window.innerWidth;
+                containerHeight = window.innerHeight;
                 
-                let newX = touch.clientX - offsetX - containerRect.left;
-                let newY = touch.clientY - offsetY - containerRect.top;
+                // Posição inicial do Tralalero (centralizado na parte inferior)
+                const tralaleroBottomMargin = 100; // Margem maior para garantir visibilidade
+                tralaleroPos = {
+                    x: containerWidth / 2 - 20,
+                    y: containerHeight - tralaleroBottomMargin
+                };
                 
-                // Limita aos limites do container (considerando o tamanho do Tralalero)
-                newX = Math.max(0, Math.min(containerWidth - tralalero.offsetWidth, newX));
-                newY = Math.max(0, Math.min(containerHeight - tralalero.offsetHeight, newY));
+                // Ajuste para dispositivos com barra de navegação virtual
+                const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat')) || 0;
+                tralaleroPos.y = Math.min(tralaleroPos.y, containerHeight - tralalero.offsetHeight - safeAreaBottom);
                 
-                // Atualiza a posição
-                tralaleroPos.x = newX;
-                tralaleroPos.y = newY;
-                tralalero.style.left = newX + 'px';
-                tralalero.style.top = newY + 'px';
-            });
-            
-            document.addEventListener('touchend', () => {
-                isDragging = false;
-            });
-        }
-
-        // Perguntas de Análise Combinatória
-        const questions = [
-            {
-                question: "Quantos anagramas tem a palavra 'AMOR'?",
-                options: ["6", "12", "24", "8"],
-                answer: 2
-            },
-            {
-                question: "Quantas senhas com 4 algarismos diferentes podemos escrever com os algarismos 1, 2, 3, 4, 5, 6, 7 e 8?",
-                options: [" 1 680", "2 378", " 3 024", "4 256"],
-                answer: 0
-            },
-            {
-                question: "De quantas maneiras diferentes, uma pessoa pode se vestir tendo 6 camisas e 4 calças?",
-                options: [" 10", "24", " 50", "22"],
-                answer: 1
-            },
-            {
-                question: "De quantas maneiras diferentes 6 amigos podem sentar em um banco para tirar uma foto?",
-                options: ["  720", "800", " 600", "340"],
-                answer: 0
-            },
-            {
-                question: "Em uma competição de xadrez existem 8 jogadores. De quantas formas diferentes poderá ser formado o pódio (primeiro, segundo e terceiro lugares)?",
-                options: [" 207", "550", " 424", "336"],
-                answer: 3
-            },
-            {
-                question: "Quantas comissões de 4 elementos podemos formar com 10 alunos de uma turma?",
-                options: [" 1 498", "2 378", " 3 024", "5 040"],
-                answer: 3
-            },
-            {
-                question: "Quantos anagramas com 4 letras distintas podemos formar com as 7 primeiras letras do alfabeto",
-                options: [" 490", "378", "840", "456"],
-                answer: 2
-            },
-            {
-                question: "Com os algarismos de 1 a 9, o total de números de 2 algarismos diferentes formados, é igual a:",
-                options: [" 72", "38", "74", "56"],
-                answer: 0
-            },
-            {
-                question: "De quantas maneiras 3 pessoas podem se sentar em 3 cadeiras?",
-                options: ["3", "6", "9", "12"],
-                answer: 1
-            },
-            {
-                question: "Quantos números de 2 algarismos distintos podemos formar com 1,2,3,4?",
-                options: ["12", "16", "8", "10"],
-                answer: 0
-            },
-            {
-                question: "Quantas combinações de 2 sabores podemos fazer com 5 sabores de sorvete?",
-                options: ["10", "15", "20", "25"],
-                answer: 0
-            },
-          
-        ];
-
-        // Função para mostrar pergunta
-        function showQuestion() {
-            gamePaused = true;
-            const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
-            
-            questionText.textContent = randomQuestion.question;
-            optionsContainer.innerHTML = '';
-            
-            randomQuestion.options.forEach((option, index) => {
-                const button = document.createElement('button');
-                button.className = 'option-btn';
-                button.textContent = option;
-                button.addEventListener('click', () => checkAnswer(index === randomQuestion.answer));
-                optionsContainer.appendChild(button);
-            });
-            
-            questionScreen.style.display = 'flex';
-        }
-
-        function checkAnswer(isCorrect) {
-            questionScreen.style.display = 'none';
-            gamePaused = false;
-            
-            if (isCorrect) {
-                currentLevel++;
-                levelElement.textContent = currentLevel;
-                crocodiloSpeed += 0.5;
-                bombSpeed += 0.5;
-                bombInterval = Math.max(30, bombInterval - 5);
-                resetPositions();
-            } else {
-                endGame();
+                tralalero.style.left = tralaleroPos.x + 'px';
+                tralalero.style.top = tralaleroPos.y + 'px';
+                
+                // Posição do Crocodilo
+                crocodiloPos = {
+                    x: containerWidth / 2 - 35,
+                    y: 50
+                };
+                crocodilo.style.left = crocodiloPos.x + 'px';
+                crocodilo.style.top = crocodiloPos.y + 'px';
             }
-        }
 
-        function resetPositions() {
-            containerWidth = window.innerWidth;
-            containerHeight = window.innerHeight;
-            
-            const tralaleroBottomMargin = 100;
-            const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat')) || 0;
-            
-            tralaleroPos = {
-                x: containerWidth / 2 - 20,
-                y: Math.min(containerHeight - tralaleroBottomMargin, containerHeight - tralalero.offsetHeight - safeAreaBottom)
-            };
-            
-            tralalero.style.left = tralaleroPos.x + 'px';
-            tralalero.style.top = tralaleroPos.y + 'px';
-            
-            crocodiloPos = {
-                x: containerWidth / 2 - 35,
-                y: 50
-            };
-            crocodilo.style.left = crocodiloPos.x + 'px';
-            crocodilo.style.top = crocodiloPos.y + 'px';
-            
-            crocodiloEstaDescendo = false;
-            warningElement.style.opacity = '0';
-            tempoNaParteDeBaixo = 0;
-            
-            bombs.forEach(bomb => {
-                if (bomb.parentNode) bomb.remove();
-            });
-            bombs = [];
-        }
+            // Controles Touch
+            function setupTouchControls() {
+                // Arrastar o Tralalero
+                let isDragging = false;
+                let offsetX, offsetY;
+                
+                tralalero.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    isDragging = true;
+                    const touch = e.touches[0];
+                    const rect = tralalero.getBoundingClientRect();
+                    offsetX = touch.clientX - rect.left;
+                    offsetY = touch.clientY - rect.top;
+                });
+                
+                document.addEventListener('touchmove', (e) => {
+                    if (!isDragging || gamePaused || gameOver) return;
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const containerRect = gameContainer.getBoundingClientRect();
+                    
+                    let newX = touch.clientX - offsetX - containerRect.left;
+                    let newY = touch.clientY - offsetY - containerRect.top;
+                    
+                    // Limita aos limites do container (considerando o tamanho do Tralalero)
+                    newX = Math.max(0, Math.min(containerWidth - tralalero.offsetWidth, newX));
+                    newY = Math.max(0, Math.min(containerHeight - tralalero.offsetHeight, newY));
+                    
+                    // Atualiza a posição
+                    tralaleroPos.x = newX;
+                    tralaleroPos.y = newY;
+                    tralalero.style.left = newX + 'px';
+                    tralalero.style.top = newY + 'px';
+                });
+                
+                document.addEventListener('touchend', () => {
+                    isDragging = false;
+                });
+            }
 
-        function moveCrocodilo() {
-            if (gamePaused || gameOver) return;
-            
-            if (tralaleroPos.y > containerHeight - 150) {
-                tempoNaParteDeBaixo++;
+            // Perguntas de Análise Combinatória
+            const questions = [
+                {
+                    question: "Quantos anagramas tem a palavra 'AMOR'?",
+                    options: ["6", "12", "24", "8"],
+                    answer: 2
+                },
+                {
+                    question: "Quantas senhas com 4 algarismos diferentes podemos escrever com os algarismos 1, 2, 3, 4, 5, 6, 7 e 8?",
+                    options: [" 1 680", "2 378", " 3 024", "4 256"],
+                    answer: 0
+                },
+                {
+                    question: "De quantas maneiras diferentes, uma pessoa pode se vestir tendo 6 camisas e 4 calças?",
+                    options: [" 10", "24", " 50", "22"],
+                    answer: 1
+                },
+                {
+                    question: "De quantas maneiras diferentes 6 amigos podem sentar em um banco para tirar uma foto?",
+                    options: ["  720", "800", " 600", "340"],
+                    answer: 0
+                },
+                {
+                    question: "Em uma competição de xadrez existem 8 jogadores. De quantas formas diferentes poderá ser formado o pódio (primeiro, segundo e terceiro lugares)?",
+                    options: [" 207", "550", " 424", "336"],
+                    answer: 3
+                },
+                {
+                    question: "Quantas comissões de 4 elementos podemos formar com 10 alunos de uma turma?",
+                    options: [" 1 498", "2 378", " 3 024", "5 040"],
+                    answer: 3
+                },
+                {
+                    question: "Quantos anagramas com 4 letras distintas podemos formar com as 7 primeiras letras do alfabeto",
+                    options: [" 490", "378", "840", "456"],
+                    answer: 2
+                },
+                {
+                    question: "Com os algarismos de 1 a 9, o total de números de 2 algarismos diferentes formados, é igual a:",
+                    options: [" 72", "38", "74", "56"],
+                    answer: 0
+                },
+                {
+                    question: "De quantas maneiras 3 pessoas podem se sentar em 3 cadeiras?",
+                    options: ["3", "6", "9", "12"],
+                    answer: 1
+                },
+                {
+                    question: "Quantos números de 2 algarismos distintos podemos formar com 1,2,3,4?",
+                    options: ["12", "16", "8", "10"],
+                    answer: 0
+                },
+                {
+                    question: "Quantas combinações de 2 sabores podemos fazer com 5 sabores de sorvete?",
+                    options: ["10", "15", "20", "25"],
+                    answer: 0
+                },
+              
+            ];
+
+            // Função para mostrar pergunta
+            function showQuestion() {
+                gamePaused = true;
+                const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
                 
-                if (tempoNaParteDeBaixo > tempoMaximoAteDescer - 60) {
-                    warningElement.style.opacity = '1';
-                }
+                questionText.textContent = randomQuestion.question;
+                optionsContainer.innerHTML = '';
                 
-                if (tempoNaParteDeBaixo > tempoMaximoAteDescer && !crocodiloEstaDescendo) {
-                    crocodiloEstaDescendo = true;
-                    crocodiloOriginalY = crocodiloPos.y;
+                randomQuestion.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'option-btn';
+                    button.textContent = option;
+                    button.addEventListener('click', () => checkAnswer(index === randomQuestion.answer));
+                    optionsContainer.appendChild(button);
+                });
+                
+                questionScreen.style.display = 'flex';
+            }
+
+            function checkAnswer(isCorrect) {
+                questionScreen.style.display = 'none';
+                gamePaused = false;
+                
+                if (isCorrect) {
+                    currentLevel++;
+                    levelElement.textContent = currentLevel;
+                    crocodiloSpeed += 0.5;
+                    bombSpeed += 0.5;
+                    bombInterval = Math.max(30, bombInterval - 5);
+                    resetPositions();
+                } else {
+                    endGame();
                 }
-            } else {
-                tempoNaParteDeBaixo = 0;
+            }
+
+            function resetPositions() {
+                containerWidth = window.innerWidth;
+                containerHeight = window.innerHeight;
+                
+                const tralaleroBottomMargin = 100;
+                const safeAreaBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sat')) || 0;
+                
+                tralaleroPos = {
+                    x: containerWidth / 2 - 20,
+                    y: Math.min(containerHeight - tralaleroBottomMargin, containerHeight - tralalero.offsetHeight - safeAreaBottom)
+                };
+                
+                tralalero.style.left = tralaleroPos.x + 'px';
+                tralalero.style.top = tralaleroPos.y + 'px';
+                
+                crocodiloPos = {
+                    x: containerWidth / 2 - 35,
+                    y: 50
+                };
+                crocodilo.style.left = crocodiloPos.x + 'px';
+                crocodilo.style.top = crocodiloPos.y + 'px';
+                
+                crocodiloEstaDescendo = false;
                 warningElement.style.opacity = '0';
+                tempoNaParteDeBaixo = 0;
+                
+                bombs.forEach(bomb => {
+                    if (bomb.parentNode) bomb.remove();
+                });
+                bombs = [];
+            }
+
+            function moveCrocodilo() {
+                if (gamePaused || gameOver) return;
+                
+                if (tralaleroPos.y > containerHeight - 150) {
+                    tempoNaParteDeBaixo++;
+                    
+                    if (tempoNaParteDeBaixo > tempoMaximoAteDescer - 60) {
+                        warningElement.style.opacity = '1';
+                    }
+                    
+                    if (tempoNaParteDeBaixo > tempoMaximoAteDescer && !crocodiloEstaDescendo) {
+                        crocodiloEstaDescendo = true;
+                        crocodiloOriginalY = crocodiloPos.y;
+                    }
+                } else {
+                    tempoNaParteDeBaixo = 0;
+                    warningElement.style.opacity = '0';
+                    
+                    if (crocodiloEstaDescendo) {
+                        crocodiloPos = {
+                            x: containerWidth / 2 - 35,
+                            y: 50
+                        };
+                        crocodilo.style.left = crocodiloPos.x + 'px';
+                        crocodilo.style.top = crocodiloPos.y + 'px';
+                        crocodiloEstaDescendo = false;
+                        warningElement.style.opacity = '0';
+                        tempoNaParteDeBaixo = 0;
+                    }
+                }
                 
                 if (crocodiloEstaDescendo) {
-                    crocodiloPos = {
-                        x: containerWidth / 2 - 35,
-                        y: 50
-                    };
-                    crocodilo.style.left = crocodiloPos.x + 'px';
-                    crocodilo.style.top = crocodiloPos.y + 'px';
-                    crocodiloEstaDescendo = false;
-                    warningElement.style.opacity = '0';
-                    tempoNaParteDeBaixo = 0;
+                    crocodiloPos.y += 1.5;
+                    crocodiloPos.y = Math.min(crocodiloPos.y, containerHeight - 200);
                 }
-            }
-            
-            if (crocodiloEstaDescendo) {
-                crocodiloPos.y += 1.5;
-                crocodiloPos.y = Math.min(crocodiloPos.y, containerHeight - 200);
-            }
-            
-            const diffX = tralaleroPos.x - crocodiloPos.x;
-            const velocidadeAtual = crocodiloSpeed + (currentLevel * 0.3);
-            
-            if (diffX > 0) {
-                crocodiloPos.x += velocidadeAtual;
-            } else if (diffX < 0) {
-                crocodiloPos.x -= velocidadeAtual;
-            }
-            
-            crocodiloPos.x = Math.max(0, Math.min(containerWidth - 70, crocodiloPos.x));
-            
-            crocodilo.style.left = crocodiloPos.x + 'px';
-            crocodilo.style.top = crocodiloPos.y + 'px';
-        }
-
-        function createBomb() {
-            if (gamePaused || gameOver) return;
-            
-            bombCounter++;
-            
-            if (bombCounter >= bombInterval && !gameOver) {
-                const bomb = document.createElement('div');
-                bomb.className = 'bomba';
-                bomb.style.left = (crocodiloPos.x + 30) + 'px';
-                bomb.style.top = (crocodiloPos.y + 40) + 'px';
-                gameContainer.appendChild(bomb);
-                bombs.push(bomb);
-                bombCounter = 0;
-            }
-        }
-
-        function updateTralalero() {
-            if (gamePaused || gameOver) return;
-            
-            tralalero.style.left = tralaleroPos.x + 'px';
-            tralalero.style.top = tralaleroPos.y + 'px';
-
-            if (tralaleroPos.y <= 30) {
-                pontos += 10;
-                updateScore();
-                showQuestion();
-            }
-        }
-
-        function updateBombs() {
-            if (gamePaused || gameOver) return;
-            
-            for (let i = bombs.length - 1; i >= 0; i--) {
-                const bomb = bombs[i];
-                const currentTop = parseInt(bomb.style.top);
                 
-                bomb.style.top = (currentTop + bombSpeed) + 'px';
-
-                if (checkCollision(tralalero, bomb)) {
-                    endGame();
-                    return;
+                const diffX = tralaleroPos.x - crocodiloPos.x;
+                const velocidadeAtual = crocodiloSpeed + (currentLevel * 0.3);
+                
+                if (diffX > 0) {
+                    crocodiloPos.x += velocidadeAtual;
+                } else if (diffX < 0) {
+                    crocodiloPos.x -= velocidadeAtual;
                 }
-                if (checkCollision(tralalero, crocodilo)) {
-                    endGame();
-                    return;
-                }
+                
+                crocodiloPos.x = Math.max(0, Math.min(containerWidth - 70, crocodiloPos.x));
+                
+                crocodilo.style.left = crocodiloPos.x + 'px';
+                crocodilo.style.top = crocodiloPos.y + 'px';
+            }
 
-                if (currentTop > containerHeight) {
+            function createBomb() {
+                if (gamePaused || gameOver) return;
+                
+                bombCounter++;
+                
+                if (bombCounter >= bombInterval && !gameOver) {
+                    const bomb = document.createElement('div');
+                    bomb.className = 'bomba';
+                    bomb.style.left = (crocodiloPos.x + 30) + 'px';
+                    bomb.style.top = (crocodiloPos.y + 40) + 'px';
+                    gameContainer.appendChild(bomb);
+                    bombs.push(bomb);
+                    bombCounter = 0;
+                }
+            }
+
+            function updateTralalero() {
+                if (gamePaused || gameOver) return;
+                
+                tralalero.style.left = tralaleroPos.x + 'px';
+                tralalero.style.top = tralaleroPos.y + 'px';
+
+                if (tralaleroPos.y <= 30) {
+                    pontos += 10;
+                    updateScore();
+                    showQuestion();
+                }
+            }
+
+            function updateBombs() {
+                if (gamePaused || gameOver) return;
+                
+                for (let i = bombs.length - 1; i >= 0; i--) {
+                    const bomb = bombs[i];
+                    const currentTop = parseInt(bomb.style.top);
+                    
+                    bomb.style.top = (currentTop + bombSpeed) + 'px';
+
+                    if (checkCollision(tralalero, bomb)) {
+                        endGame();
+                        return;
+                    }
+                    if (checkCollision(tralalero, crocodilo)) {
+                        endGame();
+                        return;
+                    }
+
+                    if (currentTop > containerHeight) {
+                        if (bomb.parentNode) {
+                            bomb.remove();
+                        }
+                        bombs.splice(i, 1);
+                        pontos += 1;
+                        updateScore();
+                    }
+                }
+            }
+
+            function checkCollision(element1, element2) {
+                const rect1 = element1.getBoundingClientRect();
+                const rect2 = element2.getBoundingClientRect();
+                
+                return !(
+                    rect1.right < rect2.left || 
+                    rect1.left > rect2.right || 
+                    rect1.bottom < rect2.top || 
+                    rect1.top > rect2.bottom
+                );
+            }
+
+            function updateScore() {
+                scoreElement.textContent = pontos;
+            }
+
+            function endGame() {
+                gameOver = true;
+                gameOverScreen.style.display = 'flex';
+            }
+
+            function resetGame() {
+                // Remover todas as bombas
+                bombs.forEach(bomb => {
                     if (bomb.parentNode) {
                         bomb.remove();
                     }
-                    bombs.splice(i, 1);
-                    pontos += 1;
-                    updateScore();
-                }
+                });
+                bombs = [];
+                
+                // Resetar variáveis do jogo
+                pontos = 0;
+                currentLevel = 1;
+                gameOver = false;
+                gamePaused = false;
+                crocodiloSpeed = 3;
+                bombSpeed = 3;
+                bombInterval = 60;
+                tempoNaParteDeBaixo = 0;
+                
+                // Atualizar UI
+                updateScore();
+                levelElement.textContent = currentLevel;
+                gameOverScreen.style.display = 'none';
+                questionScreen.style.display = 'none';
+                warningElement.style.opacity = '0';
+                
+                // Resetar posições
+                initPositions();
+                crocodiloEstaDescendo = false;
             }
-        }
 
-        function checkCollision(element1, element2) {
-            const rect1 = element1.getBoundingClientRect();
-            const rect2 = element2.getBoundingClientRect();
-            
-            return !(
-                rect1.right < rect2.left || 
-                rect1.left > rect2.right || 
-                rect1.bottom < rect2.top || 
-                rect1.top > rect2.bottom
-            );
-        }
+            // Configurar o botão de reiniciar
+            restartBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                resetGame();
+            });
 
-        function updateScore() {
-            scoreElement.textContent = pontos;
-        }
-
-        function endGame() {
-            gameOver = true;
-            gameOverScreen.style.display = 'flex';
-        }
-
-        function resetGame() {
-            // Remover todas as bombas
-            bombs.forEach(bomb => {
-                if (bomb.parentNode) {
-                    bomb.remove();
+            // Redimensionar o jogo quando a janela mudar de tamanho
+            window.addEventListener('resize', function() {
+                containerWidth = window.innerWidth;
+                containerHeight = window.innerHeight;
+                if (!gamePaused && !gameOver) {
+                    resetPositions();
                 }
             });
-            bombs = [];
-            
-            // Resetar variáveis do jogo
-            pontos = 0;
-            currentLevel = 1;
-            gameOver = false;
-            gamePaused = false;
-            crocodiloSpeed = 3;
-            bombSpeed = 3;
-            bombInterval = 60;
-            tempoNaParteDeBaixo = 0;
-            
-            // Atualizar UI
-            updateScore();
-            levelElement.textContent = currentLevel;
-            gameOverScreen.style.display = 'none';
-            questionScreen.style.display = 'none';
-            warningElement.style.opacity = '0';
-            
-            // Resetar posições
+
+            // Loop do jogo
+            function gameLoop() {
+                if (!gameOver) {
+                    frames++;
+                    moveCrocodilo();
+                    createBomb();
+                    updateTralalero();
+                    updateBombs();
+                }
+                requestAnimationFrame(gameLoop);
+            }
+
+            // Iniciar o jogo
             initPositions();
-            crocodiloEstaDescendo = false;
-        }
-
-        // Configurar o botão de reiniciar
-        restartBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
+            setupTouchControls();
             resetGame();
-        });
-
-        // Redimensionar o jogo quando a janela mudar de tamanho
-        window.addEventListener('resize', function() {
-            containerWidth = window.innerWidth;
-            containerHeight = window.innerHeight;
-            if (!gamePaused && !gameOver) {
-                resetPositions();
-            }
-        });
-
-        // Loop do jogo
-        function gameLoop() {
-            if (!gameOver) {
-                frames++;
-                moveCrocodilo();
-                createBomb();
-                updateTralalero();
-                updateBombs();
-            }
-            requestAnimationFrame(gameLoop);
+            gameLoop();
         }
-
-        // Iniciar o jogo
-        initPositions();
-        setupTouchControls();
-        resetGame();
-        gameLoop();
     </script>
 </body>
 </html>
